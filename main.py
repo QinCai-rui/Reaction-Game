@@ -39,16 +39,30 @@ i2c = I2C(0, scl=Pin(17), sda=Pin(16))
 oled = ssd1306.SSD1306_I2C(128, 64, i2c)
 
 def test():
-  # Clear the display
-  ##oled.fill(0)
-  ##oled.text("TEST", 0, 0)
-  ##oled.show()
-  if BTN_RED.value() == 1: 
     LED.value(1)
-    time.sleep(1)
-  LED.value(0)
+    time.sleep(2)
+    LED.value(0)
+    
+    # Clear the display
+    oled.fill(0)
+    oled.text("TEST", 0, 0)
+    oled.show()
+  
+    while 1: 
+    if BTN_RED.value() == 1: 
+        LED.value(1)
+        time.sleep(1)
+    LED.value(0)
 
-while 1: 
-  test()
+def select_player_mode():
+    oled.fill(0)
+    oled.text("Select Player Mode", 0, 0)
+    oled.show()
+    time.sleep(0.75)
+    oled.text("Press the left button for 1 player", 0, 0)
+    oled.show()
 
+LED.value(1)
 
+test()
+select_player_mode()
