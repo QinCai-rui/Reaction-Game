@@ -24,6 +24,7 @@
 """
 
 from machine import Pin, I2C
+from random import randint
 import ssd1306
 import time
 
@@ -57,7 +58,7 @@ def test():
         LED.value(0)
         time.sleep(0.125)
 
-def select_player_mode():
+def select_mode():
     global singleMode
     oled.fill(0)
     oled.text("Select Mode", 0, 0)
@@ -135,8 +136,33 @@ def single_game_loop():
     time.sleep(2)
 
     LED.value(1)
-    
 
+    time.sleep(randint(0,10))
+    
+    LED.value(0)
+    startTime = (time.monotonic_ns() / 1000000) # problematic
+
+    '''
+    oled.fill(0)
+    oled.text("TEST", 0, 0)
+    oled.show()
+    '''
+
+    while BTN_L.value() != 1: 
+        time.sleep(0.001)
+
+    pressTime = (time.monotonic_ns() / 1000000) # problematic
+
+    reactionTime = pressTime - startTime
+
+    oled.fill(0)
+    oled.text("Your reaction", 0, 0)
+    oled.text(f"time was {reactionTime} ms", 0, 10)
+    oled.show()
+
+
+
+    
 def duo_game_loop():
     oled.fill(0)
     oled.text("TEST", 0, 0)
@@ -144,7 +170,7 @@ def duo_game_loop():
 
 def main():
     LED.value(0)
-    select_player_mode()
+    select_mode()
 
 if __name__ == "__main__":
     #test()
