@@ -58,14 +58,15 @@ def test():
         time.sleep(0.125)
 
 def select_player_mode():
+    global singleMode
     oled.fill(0)
     oled.text("Select Mode", 0, 0)
     oled.show()
-    time.sleep(1.5)
-    oled.text("L btn = 1 person", 0, 20)
+    time.sleep(1)
+    oled.text("L btn: 1 player", 0, 20)
     oled.show()
-    time.sleep(1.25)
-    oled.text("R btn = 2 people", 0, 30)
+    time.sleep(1)
+    oled.text("R btn: 2 players", 0, 30)
     oled.show()
 
     while 1:
@@ -79,16 +80,72 @@ def select_player_mode():
         time.sleep(0.125)
 
     if singleMode: 
-        mode = '1 player mode'
+        mode = '1 player-mode'
     else: 
-        mode = '2 players mode'
+        mode = '2 player-mode'
 
     oled.fill(0)
-    oled.text("The mode you chose", 0, 0)
-    oled.text(f"is {mode}") # to-do
+    oled.text("Mode you chose: ", 0, 0)
+    oled.text(f"{mode}", 0, 10) 
     oled.show()
 
+    time.sleep(2.5)
 
+    mode_loading()
 
-#test()
-select_player_mode()
+def mode_loading():
+    if singleMode:
+        single_game_loop()
+    else:
+        duo_game_loop()
+
+def single_game_loop(): 
+    oled.fill(0)
+    oled.text("Welcome! In this", 0, 0)
+    oled.show()
+    time.sleep(1)
+    oled.text("mode of the game", 0, 10)
+    oled.show()
+    time.sleep(1)
+    oled.text("you aim to press", 0, 20)
+    oled.show()
+    time.sleep(1)
+    oled.text("the button", 0, 30)
+    oled.show()
+    time.sleep(1)
+    oled.text("as soon as the", 0, 40)
+    oled.show()
+    time.sleep(1)
+    oled.text("LED turns off...", 0, 50)
+    oled.show()
+    time.sleep(3)
+    
+    oled.fill(0)
+    oled.text("The game will", 0, 0)
+    oled.show()
+    time.sleep(0.75)
+    oled.text("now start. The", 0, 10)
+    oled.show()
+    time.sleep(1.25)
+    oled.text("LED should light", 0, 20)
+    oled.show()
+    time.sleep(0.75)
+    oled.text("up now. Have fun", 0, 30)
+    oled.show()
+    time.sleep(2)
+
+    LED.value(1)
+    
+
+def duo_game_loop():
+    oled.fill(0)
+    oled.text("TEST", 0, 0)
+    oled.show()
+
+def main():
+    LED.value(0)
+    select_player_mode()
+
+if __name__ == "__main__":
+    #test()
+    main()
