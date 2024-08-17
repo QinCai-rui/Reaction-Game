@@ -27,6 +27,7 @@ from machine import Pin, I2C
 from random import randint
 import ssd1306
 import time
+import _thread
 
 # Initialise the LED
 LED = Pin(26, Pin.OUT)
@@ -100,26 +101,52 @@ def mode_loading():
     else:
         duo_game_loop()
 
+def anti_cheating_single():
+    # Wait for the button to be released if it was pressed before the LED turned off
+    if BTN_L.value() == 1:
+        oled.fill(0)
+        oled.text("Uh uh!", 0, 0)
+        oled.text("No cheating!", 0, 10)
+        oled.show()
+        time.sleep(1.25)
+        oled.text("Please release", 0, 20)
+        oled.show()
+        time.sleep(0.75)
+        oled.text("the button and", 0, 30)
+        oled.show()
+        time.sleep(0.75)
+        oled.text("try again. OR", 0, 40)
+        oled.show()
+        time.sleep(1.25)
+        oled.text("restart the Pico", 0, 50)
+        oled.show()
+        time.sleep(2)
+        oled.fill(0)
+        oled.show()
+        while BTN_L.value() == 1:
+            time.sleep(0.001)
+
 def single_game_loop(): 
+    # This block of code prints the intro on the OLED screen
     oled.fill(0)
     oled.text("Welcome! In this", 0, 0)
     oled.show()
-    time.sleep(1)
+    time.sleep(0.75)
     oled.text("mode of the game", 0, 10)
     oled.show()
-    time.sleep(1)
+    time.sleep(0.75)
     oled.text("you aim to press", 0, 20)
     oled.show()
-    time.sleep(1)
+    time.sleep(0.75)
     oled.text("the button", 0, 30)
     oled.show()
-    time.sleep(1)
+    time.sleep(0.75)
     oled.text("as soon as the", 0, 40)
     oled.show()
-    time.sleep(1)
+    time.sleep(0.75)
     oled.text("LED turns off...", 0, 50)
     oled.show()
-    time.sleep(3)
+    time.sleep(2)
     
     oled.fill(0)
     oled.text("The game will", 0, 0)
@@ -127,34 +154,41 @@ def single_game_loop():
     time.sleep(0.75)
     oled.text("now start. The", 0, 10)
     oled.show()
-    time.sleep(1.25)
+    time.sleep(0.75)
     oled.text("LED should light", 0, 20)
     oled.show()
     time.sleep(0.75)
     oled.text("up now. Have fun", 0, 30)
     oled.show()
     time.sleep(2)
+    # END
 
+    # Turns the LED on
     LED.value(1)
 
-    time.sleep(randint(0,10))
-    
-    LED.value(0)
-    startTime = (time.monotonic_ns() / 1000000) # problematic
-
-    '''
+    # Clears the OLED screen
     oled.fill(0)
-    oled.text("TEST", 0, 0)
     oled.show()
-    '''
 
-    while BTN_L.value() != 1: 
+    # Wait between 5~10 secs before turning off the LED
+    time.sleep(randint(5,10))
+    
+    # Turns off the LED and starts the timer
+    LED.value(0)
+    startTime = time.ticks_ms()
+
+    # Wait for the button to be released if it was pressed before the LED turned off
+    anti_cheating_single()
+
+    # Now wait for the button press after the LED turns off
+    while True:
+        if BTN_L.value() == 1:
+            pressTime = time.ticks_ms()
+            reactionTime = time.ticks_diff(pressTime, startTime)
+            break
         time.sleep(0.001)
 
-    pressTime = (time.monotonic_ns() / 1000000) # problematic
-
-    reactionTime = pressTime - startTime
-
+    # Clears the screen and prints the message
     oled.fill(0)
     oled.text("Your reaction", 0, 0)
     oled.text(f"time was {reactionTime} ms", 0, 10)
@@ -162,11 +196,10 @@ def single_game_loop():
 
 
 
+
     
 def duo_game_loop():
-    oled.fill(0)
-    oled.text("TEST", 0, 0)
-    oled.show()
+    pass
 
 def main():
     LED.value(0)
