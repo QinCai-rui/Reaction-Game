@@ -4,6 +4,9 @@
  *                    GNU GENERAL PUBLIC LICENSE               *
  *                       Version 3, 29 June 2007               *
  *                                                             *
+ *  Copyright (c) 2024 by Raymont Qin. https://qincai.obl.ong  *
+ *  Licensed under the GPLv3 license                           *
+ *                                                             *
  *  This program is free software: you can redistribute it and *
  *  or modify it under the terms of the GNU General Public     *
  *  License as published by the Free Software Foundation,      *
@@ -203,7 +206,7 @@ def single_game_loop():
     # Clears the screen and prints the message
     oled.fill(0)
     oled.text("Your reaction", 0, 0)
-    oled.text(f"time was {reactionTime} ms", 0, 10)
+    oled.text(f"time was {reactionTime}ms", 0, 10)
     oled.show()
 
 
@@ -265,8 +268,33 @@ def duo_game_loop():
     anti_cheating()
 
     # Now wait for the button press after the LED turns off
-
+    while True:
+        if BTN_L.value() == 1 or BTN_R.value() == 1:
+            pressTime = time.ticks_ms()
+            reactionTime = time.ticks_diff(pressTime, startTime)
+            if BTN_L.value() == 1:
+                winner = 1
+            elif BTN_R.value() == 1:
+                winner = 2
+            break
+        time.sleep(0.001)
     
+    # Clears the screen and prints the message
+    oled.fill(0)
+    if winner == 1:
+        oled.text("Left player won", 0, 0)
+    elif winner == 2:
+        oled.text("Right player won", 0, 0)
+    oled.show()
+    time.sleep(0.5)
+    oled.text("HOORAY!", 0, 10)
+    oled.show()
+    time.sleep(1.5)
+    oled.text("Their reaction", 0, 20)
+    oled.show()
+    time.sleep(0.5)
+    oled.text(f"time was {reactionTime}ms!", 0, 30)
+    oled.show()
 
 
 def main():
