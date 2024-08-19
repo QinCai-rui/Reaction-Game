@@ -74,16 +74,15 @@ def select_mode():
     time.sleep(1)
     oled.text("R btn: 2 players", 0, 30)
     oled.show()
-
+    time.sleep(0.5)
     while 1:
-        global singleMode
         if BTN_L.value() == 1:
             singleMode = True
             break
         if BTN_R.value() == 1:
             singleMode = False
             break
-        time.sleep(0.125)
+        time.sleep(0.001)
 
     if singleMode: 
         mode = '1-player mode'
@@ -94,7 +93,6 @@ def select_mode():
     oled.text("Mode you chose: ", 0, 0)
     oled.text(f"{mode}", 0, 10) 
     oled.show()
-
     time.sleep(2.5)
 
     mode_loading()
@@ -203,10 +201,17 @@ def single_game_loop():
             break
         time.sleep(0.001)
 
-    # Clears the screen and prints the message
+    # Clears the screen and prints the congrats message
     oled.fill(0)
     oled.text("Your reaction", 0, 0)
-    oled.text(f"time was {reactionTime}ms", 0, 10)
+    oled.text(f"time was {reactionTime}ms!", 0, 10)
+    oled.show()
+    time.sleep(3)
+    oled.text("To play again, ", 0, 30)
+    oled.show()
+    time.sleep(0.75)
+    oled.text("just restart the", 0, 40)
+    oled.text("program!", 0, 50)
     oled.show()
 
 
@@ -279,21 +284,23 @@ def duo_game_loop():
             break
         time.sleep(0.001)
     
-    # Clears the screen and prints the message
+    # Clears the screen and prints the congrats message
     oled.fill(0)
     if winner == 1:
         oled.text("Left player won", 0, 0)
     elif winner == 2:
         oled.text("Right player won", 0, 0)
     oled.show()
-    time.sleep(0.5)
-    oled.text("HOORAY!", 0, 10)
-    oled.show()
     time.sleep(1.5)
-    oled.text("Their reaction", 0, 20)
+    oled.text("Their reaction", 0, 10)
+    oled.text(f"time was {reactionTime}ms!", 0, 20)
     oled.show()
-    time.sleep(0.5)
-    oled.text(f"time was {reactionTime}ms!", 0, 30)
+    time.sleep(3)
+    oled.text("To play again, ", 0, 30)
+    oled.show()
+    time.sleep(0.75)
+    oled.text("just restart the", 0, 40)
+    oled.text("program!", 0, 50)
     oled.show()
 
 
@@ -306,3 +313,9 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         LED.value(0)
+    except Exceptions:
+        LED.value(0)
+        oled.fill(0)
+        oled.text("An error occured", 0, 0)
+        oled.text("Please try again", 0, 10)
+        oled.show()
