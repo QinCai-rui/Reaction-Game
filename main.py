@@ -30,11 +30,9 @@ from machine import Pin, I2C
 from random import randint
 import ssd1306
 from time import sleep, ticks_ms, ticks_diff
-import sys
 
 # Initialise the LED
 LED = Pin(26, Pin.OUT)
-
 
 # Initialise the buttons
 BTN_L = Pin(19, Pin.IN, Pin.PULL_DOWN)
@@ -134,9 +132,6 @@ def anti_cheating():
         oled.show()
         while BTN_L.value() == 1 or BTN_R.value() == 1:
             sleep(0.001)
-
-        # quit the program when players release the buttons
-        sys.exit(1)
         
 
 def single_game_loop(): 
@@ -307,6 +302,7 @@ def duo_game_loop():
 def main():
     LED.value(0)
     select_mode()
+
 
 if __name__ == "__main__":
     try: 
