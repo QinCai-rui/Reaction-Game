@@ -155,7 +155,6 @@ def single_game_loop():
     oled.text("LED turns off...", 0, 50)
     oled.show()
     sleep(2)
-    
     oled.fill(0)
     oled.text("The game will", 0, 0)
     oled.show()
@@ -228,7 +227,6 @@ def duo_game_loop():
     oled.text("LED turns off...", 0, 40)
     oled.show()
     sleep(3.5)
-
     oled.fill(0)
     oled.text("The game will", 0, 0)
     oled.show()
@@ -300,6 +298,8 @@ def duo_game_loop():
 
 
 def main():
+    LED.value(1)
+    sleep(2.5)
     LED.value(0)
     select_mode()
 
