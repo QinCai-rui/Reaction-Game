@@ -5,13 +5,20 @@ By QinCai, https://qincai.obl.ong
 This is a simple (but not so simple) hardware game, where one or two players press a button after a LED turns off. The reaction time is the time between the LED turns off and the user presses the button.
 
 ## How to Play
-1. Head your browser to https://wokwi.com/projects/406241938731148289 and press the green circle with a triangle in it! The game might be slow, and the timer might not work properly, depending on the specific device you are using.
+1. Head your browser to https://wokwi.com/projects/406241938731148289 and press the green circle with a triangle inside! The game might be slow, and the timer might not work properly, depending on the device you are using.
 
-2. Read and follow the instructions displyed on the OLED screen.
+2. Read and follow the instructions displayed on the OLED screen.
 
-3. Press your button (or 1 on the keyboard for Left button, 2 for Right button) as soon as the LED turns off. No cheating by pressing and holding the button! The program won't allow you to do that ;)
+3. Press your button (or 1 on the keyboard for the Left button, 2 for the Right button) as soon as the LED turns off. No cheating by pressing and holding the button! The program won't allow you to do that muahahaha! ; )
 
-4. Your reaction time would be displayed on the OLED screen. If in two-player mode, only the reaction time of the fastest person that presses will be displayed!
+4. Your reaction time will be displayed on the OLED screen. If you are in two-player mode, only the reaction time of the fastest person that presses will be displayed!
+
+## Screenshots
+![Screenshot 2024-08-22 12 15 21](https://github.com/user-attachments/assets/c765972f-fe54-4b15-8c93-0bdea4259904)
+![image](https://github.com/user-attachments/assets/e88b1e7c-d5e7-41f9-94d4-9fd805ee358a)
+![image](https://github.com/user-attachments/assets/e91a72f8-a2cf-4d06-a52e-9656da1a99cb)
+![image](https://github.com/user-attachments/assets/80b78707-d790-49d0-aa5c-48d67ddb4585)
+
 
 ## Features
 1. Wokwi simulation right in your browser (for free!)
