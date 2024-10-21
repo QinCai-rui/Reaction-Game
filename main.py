@@ -4,7 +4,7 @@
  *                    GNU GENERAL PUBLIC LICENSE               *
  *                       Version 3, 29 June 2007               *
  *                                                             *
- *  Copyright (c) 2024 by Raymont Qin. https://qincai.obl.ong  *
+ *  Copyright (c) 2024 by Raymont Qin. https://qincai.xyz      *
  *  Licensed under the GPLv3 license                           *
  *                                                             *
  *  This program is free software: you can redistribute it and *
