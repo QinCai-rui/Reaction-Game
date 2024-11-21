@@ -1,5 +1,5 @@
 # Reaction Game
-By QinCai, https://qincai.obl.ong
+By QinCai, https://qincai.xyz
 
 ## Description
 This is a simple (but not so simple) hardware game, where one or two players press a button after a LED turns off. The reaction time is the time between the LED turns off and the user presses the button.
