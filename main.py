@@ -39,7 +39,7 @@ BTN_L = Pin(0, Pin.IN, Pin.PULL_UP)
 BTN_R = Pin(11, Pin.IN, Pin.PULL_UP)
 
 # VDD for OLED display
-oled_VDD = Pin(18, Pin.OUT, value = 1)
+oled_VDD = Pin(18, Pin.OUT, value=1)
 
 # Initialise I2C for the SSD1306 OLED display
 i2c = I2C(0, scl=Pin(17), sda=Pin(16))
@@ -51,12 +51,12 @@ def test():
     LED.value(1)
     sleep(2)
     LED.value(0)
-    
+
     # Clear the display
     oled.fill(0)
     oled.text("TEST", 0, 0)
     oled.show()
-  
+
     while 1:
         if BTN_R.value() == 0:
             LED.value(1)
@@ -91,14 +91,14 @@ def select_mode():
             singleMode = False
             break
 
-    if singleMode: 
-        mode = '1-player mode'
-    else: 
-        mode = '2-player mode'
+    if singleMode:
+        mode = "1-player mode"
+    else:
+        mode = "2-player mode"
 
     oled.fill(0)
     oled.text("Mode you chose: ", 0, 0)
-    oled.text(f"{mode}", 0, 10) 
+    oled.text(f"{mode}", 0, 10)
     oled.show()
     sleep(2.5)
 
@@ -121,12 +121,12 @@ def anti_cheating(player):
         oled.text("Uh uh!", 0, 0)
         oled.text("No cheating!", 0, 10)
 
-    elif player == "duo1":   # If cheated in double player mode...
+    elif player == "duo1":  # If cheated in double player mode...
         oled.fill(0)
         oled.text("Uh uh!", 0, 0)
         oled.text("No cheating PL1!", 0, 10)
 
-    elif player == "duo2":   # If cheated in double player mode...
+    elif player == "duo2":  # If cheated in double player mode...
         oled.fill(0)
         oled.text("Uh uh!", 0, 0)
         oled.text("No cheating PL2!", 0, 10)
@@ -148,8 +148,10 @@ def anti_cheating(player):
         pass
     sleep(2)
     # Hard reset
-    import machine; machine.reset()
-        
+    import machine
+
+    machine.reset()
+
 
 # Function to print reaction time on screen
 def print_reaction_time(reactionTime, mode):
@@ -158,7 +160,7 @@ def print_reaction_time(reactionTime, mode):
             oled.text(f"time was {reactionTime}ms!", 0, 10)
         elif mode == "duo":
             oled.text(f"time was {reactionTime}ms!", 0, 20)
-            
+
     elif reactionTime < 100000:
         reactionTime /= 1000
         reactionTime = round(reactionTime, 2)
@@ -166,16 +168,16 @@ def print_reaction_time(reactionTime, mode):
             oled.text(f"time was {reactionTime}s!", 0, 10)
         elif mode == "duo":
             oled.text(f"time was {reactionTime}s!", 0, 20)
-            
+
     else:
         if mode == "single":
             oled.text("time was 100+ s", 0, 10)
         elif mode == "duo":
             oled.text("time was 100+ s", 0, 20)
-        
+
 
 # Game loop for a single person
-def single_game_loop(): 
+def single_game_loop():
     # This block of code prints the intro on the OLED screen
     oled.fill(0)
     oled.text("Welcome! In this", 0, 0)
@@ -218,8 +220,8 @@ def single_game_loop():
     oled.fill(0)
     oled.show()
 
-    timeLED_off = int(ticks_ms()) + int((1000 * (randint(5,10))))
-    
+    timeLED_off = int(ticks_ms()) + int((1000 * (randint(5, 10))))
+
     while not timeLED_off == ticks_ms():
         if BTN_L.value() == 0:  # If button is pressed before LED turns off...
             anti_cheating("single")
@@ -235,7 +237,7 @@ def single_game_loop():
             pressTime = ticks_ms()
             reactionTime = ticks_diff(pressTime, startTime)
             break
-            
+
     # Clears the screen and prints the congrats message
     oled.fill(0)
     oled.text("Your reaction", 0, 0)
@@ -297,14 +299,14 @@ def duo_game_loop():
     oled.fill(0)
     oled.show()
 
-    timeLED_off = int(ticks_ms()) + int((1000 * (randint(5,10))))
-    
+    timeLED_off = int(ticks_ms()) + int((1000 * (randint(5, 10))))
+
     while not timeLED_off == ticks_ms():
         if BTN_L.value() == 0:  # If left button is pressed before LED turns off...
             anti_cheating("duo1")
         elif BTN_R.value() == 0:  # If right button is pressed before LED turns off...
             anti_cheating("duo2")
-    
+
     # Turns off the LED and starts the timer
     LED.value(0)
     startTime = ticks_ms()
@@ -320,7 +322,7 @@ def duo_game_loop():
             elif BTN_R.value() == 0:
                 winner = 2
             break
-    
+
     # Clears the screen and prints the congrats message
     oled.fill(0)
     if winner == 1:
@@ -351,9 +353,10 @@ def main():
 
 
 if __name__ == "__main__":
-    try: 
+    try:
         main()
-    except Exception:
+    except KeyboardInterrupt:
         oled.fill(0)
         oled.show()
         LED.value(0)
+
