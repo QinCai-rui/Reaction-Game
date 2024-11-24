@@ -31,7 +31,7 @@ from random import randint
 import ssd1306
 from time import sleep, ticks_ms, ticks_diff
 
-# Initialise the LED
+# Initialise the on-board LED
 LED = Pin("LED", Pin.OUT)
 
 # Initialise the buttons
@@ -46,7 +46,7 @@ i2c = I2C(0, scl=Pin(17), sda=Pin(16))
 oled = ssd1306.SSD1306_I2C(128, 64, i2c)
 
 
-# Function for testing the build
+# Function for testing the LED and OLED screen
 def test():
     LED.value(1)
     sleep(2)
@@ -57,17 +57,13 @@ def test():
     oled.text("TEST", 0, 0)
     oled.show()
 
-    while 1:
-        if BTN_R.value() == 0:
-            LED.value(1)
-            sleep(1)
-        LED.value(0)
 
-
+# Function to test the buttons
 def test2():
     while 1:
+        print(BTN_L.value())
         print(BTN_R.value())
-        sleep(0.1)
+        sleep(0.125)
 
 
 # Function that asks for the mode of game
@@ -244,12 +240,6 @@ def single_game_loop():
     print_reaction_time(reactionTime, "single")
     oled.show()
     sleep(3)
-    oled.text("To play again, ", 0, 30)
-    oled.show()
-    sleep(0.85)
-    oled.text("just restart the", 0, 40)
-    oled.text("program!", 0, 50)
-    oled.show()
 
 
 # Game loop for two people
@@ -335,28 +325,12 @@ def duo_game_loop():
     print_reaction_time(reactionTime, "duo")
     oled.show()
     sleep(3)
-    oled.text("To play again, ", 0, 30)
-    oled.show()
-    sleep(0.85)
-    oled.text("just restart the", 0, 40)
-    oled.text("program!", 0, 50)
-    oled.show()
-
-
-def main():
-    for i in range(10):
-        LED.value(1)
-        sleep(0.0625)
-        LED.value(0)
-        sleep(0.0625)
-    select_mode()
 
 
 if __name__ == "__main__":
     try:
-        main()
+        select_mode()
     except KeyboardInterrupt:
         oled.fill(0)
         oled.show()
         LED.value(0)
-
