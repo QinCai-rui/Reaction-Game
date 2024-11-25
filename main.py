@@ -38,9 +38,6 @@ LED = Pin("LED", Pin.OUT)
 BTN_L = Pin(0, Pin.IN, Pin.PULL_UP)
 BTN_R = Pin(11, Pin.IN, Pin.PULL_UP)
 
-# VDD for OLED display
-oled_VDD = Pin(18, Pin.OUT, value=1)
-
 # Initialise I2C for the SSD1306 OLED display
 i2c = I2C(0, scl=Pin(17), sda=Pin(16))
 oled = ssd1306.SSD1306_I2C(128, 64, i2c)
