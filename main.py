@@ -143,6 +143,7 @@ def anti_cheating(player):
     while BTN_L.value() == 0 or BTN_R.value() == 0:
         pass
     sleep(2)
+
     # Hard reset
     import machine
 
@@ -153,23 +154,72 @@ def anti_cheating(player):
 def print_reaction_time(reactionTime, mode):
     if reactionTime < 10000:
         if mode == "single":
-            oled.text(f"time was {reactionTime}ms!", 0, 10)
+            oled.text(f"time: {reactionTime}ms", 0, 10)
         elif mode == "duo":
-            oled.text(f"time was {reactionTime}ms!", 0, 20)
-
+            oled.text(f"time: {reactionTime}ms", 0, 20)
     elif reactionTime < 100000:
         reactionTime /= 1000
         reactionTime = round(reactionTime, 2)
         if mode == "single":
-            oled.text(f"time was {reactionTime}s!", 0, 10)
+            oled.text(f"time: {reactionTime}s", 0, 10)
         elif mode == "duo":
-            oled.text(f"time was {reactionTime}s!", 0, 20)
-
+            oled.text(f"time: {reactionTime}s", 0, 20)
     else:
         if mode == "single":
-            oled.text("time was 100+ s", 0, 10)
+            oled.text("time: 100+ s", 0, 10)
         elif mode == "duo":
-            oled.text("time was 100+ s", 0, 20)
+            oled.text("time: 100+ s", 0, 20)
+
+    oled.show()
+    sleep(1)
+    feedback1, feedback2 = provide_feedback(reactionTime)
+    oled.text(feedback1, 0, 30)
+    oled.text(feedback2, 0, 40)
+    oled.show()
+
+
+# Function to provide feedback based on reaction time
+def provide_feedback(reactionTime):
+    if reactionTime < 20:
+        feedback1 = "You are faster"
+        feedback2 = "than a cat!"
+    elif reactionTime < 50:
+        feedback1 = "You are as quick"
+        feedback2 = "as a cat!"
+    elif reactionTime < 70:
+        feedback1 = "You have lightni"
+        feedback2 = "ng-fast reflexes"
+    elif reactionTime < 100:
+        feedback1 = "You are reflexiv"
+        feedback2 = "e like a ninja!"
+    elif reactionTime < 150:
+        feedback1 = "You are sooo"
+        feedback2 = "fast!"
+    elif reactionTime < 200:
+        feedback1 = "You are quicker"
+        feedback2 = "than most!"
+    elif reactionTime < 250:
+        feedback1 = "You are quite"
+        feedback2 = "fast!"
+    elif reactionTime < 300:
+        feedback1 = "You are average."
+        feedback2 = ""  # Not needed
+    elif reactionTime < 400:
+        feedback1 = "You are slower"
+        feedback2 = "than average."
+    elif reactionTime < 500:
+        feedback1 = "You need a bit"
+        feedback2 = "more practice."
+    elif reactionTime < 700:
+        feedback1 = "You are really"
+        feedback2 = "taking your time!"
+    elif reactionTime < 2000:
+        feedback1 = "You might need"
+        feedback2 = "more coffee."
+    else:
+        feedback1 = "Are you using"
+        feedback2 = "this as a timer?"
+    return feedback1, feedback2
 
 
 # Game loop for a single person
@@ -204,13 +254,12 @@ def single_game_loop():
     oled.text("LED should light", 0, 20)
     oled.show()
     sleep(0.85)
+    # Turns the LED on
+    LED.value(1)
     oled.text("up now. Have fun", 0, 30)
     oled.show()
     sleep(2)
     # END
-
-    # Turns the LED on
-    LED.value(1)
 
     # Clears the OLED screen
     oled.fill(0)
@@ -260,7 +309,7 @@ def duo_game_loop():
     sleep(0.85)
     oled.text("LED turns off...", 0, 40)
     oled.show()
-    sleep(3.5)
+    sleep(2.5)
     oled.fill(0)
     oled.text("The game will", 0, 0)
     oled.show()
@@ -276,14 +325,13 @@ def duo_game_loop():
     sleep(0.85)
     oled.text("your opponent!", 0, 40)
     oled.show()
-    sleep(2.5)
+    sleep(2)
+    # Turns the LED on
+    LED.value(1)
     oled.text("LED is on!", 0, 50)
     oled.show()
     sleep(1)
     # END
-
-    # Turns the LED on
-    LED.value(1)
 
     # Clears the OLED screen
     oled.fill(0)
